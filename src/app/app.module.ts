@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { UserComponent } from './user/user.component';
 import { PhonePipe } from './phone.pipe';
+import { FriendsComponent } from './user/friends/friends.component';
 
 const routes = [
   {
@@ -26,7 +27,8 @@ const routes = [
     AppComponent,
     UserListComponent,
     UserComponent,
-    PhonePipe
+    PhonePipe,
+    FriendsComponent
   ],
   imports: [
     BrowserModule,

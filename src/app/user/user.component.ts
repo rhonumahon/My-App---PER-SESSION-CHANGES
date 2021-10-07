@@ -9,6 +9,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class UserComponent implements OnInit {
   id: any;
   location: any;
+  activeTab: boolean = true;
+  friends: any[] = [];
 
   constructor(private route: ActivatedRoute, private router: Router) { 
     const url = this.route.snapshot;
@@ -21,6 +23,16 @@ export class UserComponent implements OnInit {
 
   back(){
     this.router.navigate(['myApp'])
+  }
+
+  tab(value){
+this.activeTab = value;
+
+  }
+
+  collectFriends(event){
+this.friends = event;
+
   }
 
   submit() {

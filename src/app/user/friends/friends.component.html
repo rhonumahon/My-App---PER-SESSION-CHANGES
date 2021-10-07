@@ -1,0 +1,27 @@
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-7">
+            <label><h4>{{ currentTab ? 'Active' : 'Inactive'}} Friends:</h4></label>
+        </div>
+        <div class="col-5">
+            <div class="input-group">
+                <input (input)="inputFriend('first', $event)" type="text" aria-label="First name" class="form-control" placeholder="First name">
+                <input (input)="inputFriend('last', $event)" type="text" aria-label="Last name" class="form-control" placeholder="Last name">
+                <button (click)="addFriend()" class="btn btn-outline-secondary" type="button">Add</button>
+              </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="card col-5" *ngIf="currentTab">
+            <ul class="list-group list-group-flush" *ngFor="let a of trueFriends">
+              <li class="list-group-item">{{a.firstName + " " + a.lastName}}</li>
+            </ul>
+          </div>
+
+          <div class="card col-5" *ngIf="!currentTab">
+            <ul class="list-group list-group-flush" *ngFor="let i of falseFriends">
+              <li class="list-group-item">{{i.firstName + " " + i.lastName}}</li>
+            </ul>
+          </div>
+    </div>
+</div>
