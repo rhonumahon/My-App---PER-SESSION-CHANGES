@@ -1,36 +1,66 @@
 <div class="container">
-    <div class="row">
-        <div class="col-10">
-            <label><h1>List of Users</h1></label>
-        </div>
-        <div class="col-2">
-            <button class="btn btn-primary" (click)="addUser()">Add User</button>
-        </div>
+  <div class="row mt-5 mb-3">
+    <div class="col-10">
+      <h1>List of Users</h1>
     </div>
-
+    <div class="col-2">
+      <button class="btn btn-primary" (click)="addUser()">Add User</button>
+    </div>
+  </div>
+  <div class="row">
     <div class="card">
-        <div class="card-body">
-            <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Address</th>
-                    <th scope="col">Contact</th>
-                    <th scope="col">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let d of data; let i = index">
-                    <th [routerLink]="['/myApp', d.id, 'view']" style="cursor: pointer; color: rgb(0, 68, 255);">{{d.firstName + " " + d.lastName}}</th>
-                    <td>{{d.address}}</td>
-                    <td>{{d.contact | phone}}</td>
-                    <td>
-                        <a>Edit</a>
-                        <a (click)="deleteUser(i)" class="mx-3" style="cursor: pointer;">Delete</a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-        </div>
+      <div class="card-body">
+        <table class="table table-striped">
+          <thead>
+            <th>
+              <h5>Name</h5>
+            </th>
+            <th>
+              <h5>Address</h5>
+            </th>
+            <th>
+              <h5>Contact</h5>
+            </th>
+            <th>
+              <h5>Actions</h5>
+            </th>
+          </thead>
+          <tbody>
+            <ng-container *ngIf="is_loading">
+              <tr>
+                <td>
+                  <div class="skeleton-loader" style="height: 20px"></div>
+                </td>
+                <td>
+                  <div class="skeleton-loader" style="height: 20px"></div>
+                </td>
+                <td>
+                  <div class="skeleton-loader" style="height: 20px"></div>
+                </td>
+                <td>
+                  <div class="skeleton-loader" style="height: 20px"></div>
+                </td>
+              </tr>
+            </ng-container>
+            <ng-container *ngIf="!is_loading && Users.length === 0">
+              <div>No results found.</div>
+            </ng-container>
+            <ng-container *ngIf="!is_loading && Users.length > 0">
+              <tr *ngFor="let user of Users; let i = index">
+                <td [routerLink]="['/sampleApp', user.id, 'view']" style="cursor: pointer; color: rgb(0, 119, 255)">
+                  {{ user.firstName + " " + user.lastName }}
+                </td>
+                <td>{{ user.address }}</td>
+                <td>{{ user.contact | phone }}</td>
+                <td>
+                  <a [routerLink]="['/sampleApp', user.id, 'edit']">Edit</a>
+                  <a class="mx-3" (click)="deletes(user.id)" style="cursor: pointer">Delete</a>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
     </div>
+  </div>
 </div>
