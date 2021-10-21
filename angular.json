@@ -1,12 +1,9 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "cli": {
-    "analytics": false
-  },
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "myApp": {
+    "upskilling-assessment-ui": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -16,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/myApp",
+            "outputPath": "dist/upskilling-assessment-ui",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -27,9 +24,13 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/@popperjs/core/dist/umd/popper.min.js",
+              "./node_modules/bootstrap/dist/js/bootstrap.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -64,18 +65,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "myApp:build"
+            "browserTarget": "upskilling-assessment-ui:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "myApp:build:production"
+              "browserTarget": "upskilling-assessment-ui:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "myApp:build"
+            "browserTarget": "upskilling-assessment-ui:build"
           }
         },
         "test": {
@@ -112,16 +113,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "myApp:serve"
+            "devServerTarget": "upskilling-assessment-ui:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "myApp:serve:production"
+              "devServerTarget": "upskilling-assessment-ui:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "myApp"
+  "defaultProject": "upskilling-assessment-ui"
 }
