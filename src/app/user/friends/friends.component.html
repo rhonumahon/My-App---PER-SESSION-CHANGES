@@ -1,27 +1,64 @@
-<div class="container mt-4">
-    <div class="row">
-        <div class="col-7">
-            <label><h4>{{ currentTab ? 'Active' : 'Inactive'}} Friends:</h4></label>
-        </div>
-        <div class="col-5">
-            <div class="input-group">
-                <input (input)="inputFriend('first', $event)" type="text" aria-label="First name" class="form-control" placeholder="First name">
-                <input (input)="inputFriend('last', $event)" type="text" aria-label="Last name" class="form-control" placeholder="Last name">
-                <button (click)="addFriend()" class="btn btn-outline-secondary" type="button">Add</button>
-              </div>
-        </div>
+<div class="container mt-3">
+  <div class="row {{location === 'view' ? 'col-4': ''}}">
+    <div *ngIf="location === 'add'" class="col-7">
+      <h4>Add {{ value | titlecase}} Friends:</h4>
     </div>
-    <div class="row mt-4">
-        <div class="card col-5" *ngIf="currentTab">
-            <ul class="list-group list-group-flush" *ngFor="let a of trueFriends">
-              <li class="list-group-item">{{a.firstName + " " + a.lastName}}</li>
-            </ul>
-          </div>
-
-          <div class="card col-5" *ngIf="!currentTab">
-            <ul class="list-group list-group-flush" *ngFor="let i of falseFriends">
-              <li class="list-group-item">{{i.firstName + " " + i.lastName}}</li>
-            </ul>
-          </div>
+    <div class="dropdown" style="margin-bottom: 5px;">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+        aria-expanded="false">
+        Filter By
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        <li><a style="cursor: pointer;" class="dropdown-item" (click)="filter('none')">None</a></li>
+        <li><a style="cursor: pointer;" class="dropdown-item" (click)="filter('first')">First Name</a></li>
+        <li><a style="cursor: pointer;" class="dropdown-item" (click)="filter('last')">Last Name</a></li>
+      </ul>
     </div>
+    <span *ngIf="isFiltered && filteredBy!= 'none'" class="badge rounded-pill bg-secondary"
+      style="margin-bottom: 5px; width: 200px;">
+      {{ filteredBy | uppercase }} NAME
+    </span>
+    <div *ngIf="location !== 'add'" class="input-group mb-3">
+      <input (input)="searchFriend($event)" type="text" class="form-control" placeholder="Search a friend..."
+        aria-label="Recipient's username" aria-describedby="button-addon2">
+      <button class="btn btn-outline-secondary" type="button" id="button-addon2">Search</button>
+    </div>
+    <div *ngIf="location !== 'view' && activeTab != 'all'" class="col-5">
+      <div class="input-group">
+        <input #firstName (input)="inputFriend('first', $event)" type="text" aria-label="First name"
+          class="form-control" placeholder="First name">
+        <input #lastName (input)="inputFriend('last', $event)" type="text" aria-label="Last name" class="form-control"
+          placeholder="Last name">
+        <button (click)="addFriend()" class="btn btn-outline-secondary" type="button"> {{ isEditFriendMode ? 'Edit' :
+          'Add' }} </button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="card mt-3" *ngIf="newValue === 'active'">
+      <ul class="list-group list-group-flush" *ngFor="let a of activeList;">
+        <li class="list-group-item">{{a.firstName + " " + a.lastName}}
+          <a *ngIf="location === 'edit'" (click)="editFriend(a.userId)"
+            style="margin-right: 5px;cursor: pointer;  color: rgb(0, 119, 255)">Edit</a>
+        </li>
+      </ul>
+    </div>
+    <div class="card mt-3" *ngIf="newValue === 'inactive'">
+      <ul class="list-group list-group-flush" *ngFor="let i of inactiveList;">
+        <li class="list-group-item">{{i.firstName + " " + i.lastName}}
+          <a *ngIf="location === 'edit'" (click)="editFriend(i.userId)"
+            style="margin-right: 5px;cursor: pointer;  color: rgb(0, 119, 255)">Edit</a>
+        </li>
+      </ul>
+    </div>
+    <div class="card mt-3" *ngIf="newValue==='all'">
+      <ul class="list-group list-group-flush" *ngFor="let item of allList">
+        <li class="list-group-item">{{item.firstName + " " + item.lastName}}
+          <span *ngIf="location === 'edit'"> | </span>
+          <a *ngIf="location === 'edit'" (click)="deleteFriend(item.userId)"
+            style="margin-right: 5px;cursor: pointer;  color: rgb(0, 119, 255)">Delete</a>
+        </li>
+      </ul>
+    </div>
+  </div>
 </div>
